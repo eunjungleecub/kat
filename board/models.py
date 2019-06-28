@@ -5,7 +5,7 @@ import account.models
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    #import user account
+    #import user account; @decoration
     author = models.CharField(max_length=10)
     created_date = models.DateTimeField('date post created', auto_now_add=True)
     files = models.FileField(upload_to='files')
@@ -21,10 +21,14 @@ class Post(models.Model):
 
 class Comment(models.Model):
     #import user account
-    post = models.ForeignKey()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=10)
-    content = models.TextField()
+    content = models.TextField(max_length=200)
+    created_date = models.DateTimeField('date post created', auto_now_add=True)
 
-class Subcomments(models.Model):
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
 
+#    def total_likes(self)
 
+# def like_action(self)
